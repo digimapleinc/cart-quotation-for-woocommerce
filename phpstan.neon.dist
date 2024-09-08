@@ -1,0 +1,12 @@
+parameters:
+		level: 1 # Gotta start somewhere
+		inferPrivatePropertyTypeFromConstructor: true
+		checkMissingIterableValueType: false
+		bootstrapFiles:
+			- phpstan/constants.php
+		paths:
+			- dm-cart-quotation.php
+			- include/
+		excludePaths:
+			analyseAndScan:
+				- */vendor/*

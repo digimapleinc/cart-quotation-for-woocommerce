@@ -1,0 +1,14 @@
+.wcq-buttons {
+	max-width: 500px;
+}
+
+.wcq-buttons .col-25 {
+	width: 25%;
+}
+
+.wcq-mr-10 {
+	margin-right: 10px;
+}
+.wcq-buttons input {
+	width: 100%;
+}

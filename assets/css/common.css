@@ -1,0 +1,31 @@
+/* Preloader Styles */
+#wcq-preloader {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	/* background-color: transparent; */
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.wcq-loader {
+	border: 8px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 8px solid #3498db; /* Change this to your brand color */
+	width: 60px;
+	height: 60px;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
