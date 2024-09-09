@@ -3,7 +3,6 @@
 **Version:** 0.0.1  
 **Author:** Digi Maple Inc.  
 **Plugin URI:** [https://github.com/digimapleinc/cart-quotation-for-woocommerce/](https://github.com/digimapleinc/cart-quotation-for-woocommerce/)  
-**Author URI:** [https://github.com/digimapleinc/cart-quotation-for-woocommerce/](https://github.com/digimapleinc/cart-quotation-for-woocommerce/)  
 **License:** GPLv2 or later  
 **License URI:** [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)  
 **Requires PHP:** 7.2  
