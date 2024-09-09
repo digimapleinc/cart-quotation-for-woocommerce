@@ -47,3 +47,5 @@ webpack.config.js
 phpcs.xml.dist
 .wp-env.json
 .codeclimate.yml
+phpstan.neon
+.zipignore
