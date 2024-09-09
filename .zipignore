@@ -28,4 +28,4 @@ deploy.sh
 *docker-compose.yml*
 *codeception.dist.yml*
 *coverage*
-.zipignore
+*.zipignore
