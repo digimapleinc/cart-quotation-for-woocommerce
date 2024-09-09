@@ -1,12 +1,19 @@
 {
 	"name": "digimaple/cart-quotation",
-	"description": "Plugin for working with Woocommerce, to handle cart to quoataion.",
+	"description": "Plugin for working with Woocommerce, to handle cart to quotation.",
 	"type": "project",
 	"minimum-stability": "stable",
+	"authors": [
+		{
+			"name": "Digi Maple Inc."
+		},
+		{
+			"name": "Gary Dubb"
+		}
+	],
 	"require": {
 		"php": "^7.1 || ^8.0"
 	},
-
 	"require-dev": {
 		"automattic/vipwpcs": "^3.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -54,6 +61,11 @@
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"phpstan/extension-installer": true
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"WooQuoteRequest\\": "src/"
 		}
 	},
 	"autoload-dev": {
