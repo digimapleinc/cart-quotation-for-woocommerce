@@ -16,7 +16,7 @@
  * Author URI: https://github.com/digimapleinc/cart-quotation-for-woocommerce/
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: dmcq
+ * Text Domain: dm-cart-quotation
  * Domain Path: /languages
  * Requires PHP: 7.4
  * Requires at least: 5.7
