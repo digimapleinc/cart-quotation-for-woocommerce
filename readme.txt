@@ -12,6 +12,8 @@
 **Text Domain:** dmcq  
 **Domain Path:** /languages
 
+A unique WooCommerce plugin that allows store owners to send a link containing the items in cart to customers.
+
 ## Description
 
 Cart Quotation for Woocommerce is a unique WooCommerce plugin that allows store owners to send a link containing the items in a customer's cart. This link enables customers to complete their purchase with just a single payment step, streamlining the checkout process.

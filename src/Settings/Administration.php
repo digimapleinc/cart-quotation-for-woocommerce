@@ -47,8 +47,8 @@ class Administration {
 	public static function register_settings_menu() {
 		add_submenu_page(
 			'woocommerce',
-			__( 'CQW', WCQ_SLUG ),
-			__( 'CQW', WCQ_SLUG ),
+			__( 'CQW', 'dm-cart-quotation' ),
+			__( 'CQW', 'dm-cart-quotation' ),
 			'manage_options',
 			'wcq-settings',
 			[ self::class, 'display_settings_page' ]
@@ -85,7 +85,7 @@ class Administration {
 
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Cart Quotation Generator Settings', WCQ_SLUG ); ?></h1>
+			<h1><?php esc_html_e( 'Cart Quotation Generator Settings', 'dm-cart-quotation' ); ?></h1>
 
 			<form id="wcq-settings-form">
 				<?php wp_nonce_field( 'wcq_save_settings_nonce_action', 'wcq_save_settings_nonce' ); ?>
@@ -95,7 +95,7 @@ class Administration {
 					<?php self::render_notice_fields( 'notices', $settings['notices'] ); ?>
 					<?php self::render_messages_fields( 'messages', $settings['messages'] ); ?>
 				</table>
-				<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', WCQ_SLUG ); ?>">
+				<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'dm-cart-quotation' ); ?>">
 			</form>
 			<?php Utilities::wcq_reploader(); ?>
 		</div>
@@ -122,27 +122,27 @@ class Administration {
 			</th>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_text"><?php esc_html_e( 'Button Text', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_text"><?php esc_html_e( 'Button Text', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $button_name ); ?>_text" name="<?php echo esc_attr( $button_name ); ?>[text]" value="<?php echo esc_attr( $button_settings['text'] ); ?>" class="regular-text" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_background_color"><?php esc_html_e( 'Background Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_background_color"><?php esc_html_e( 'Background Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $button_name ); ?>_background_color" name="<?php echo esc_attr( $button_name ); ?>[background_color]" value="<?php echo esc_attr( $button_settings['background_color'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_text_color"><?php esc_html_e( 'Text Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_text_color"><?php esc_html_e( 'Text Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $button_name ); ?>_text_color" name="<?php echo esc_attr( $button_name ); ?>[text_color]" value="<?php echo esc_attr( $button_settings['text_color'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_hover_background"><?php esc_html_e( 'Hover Background Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_hover_background"><?php esc_html_e( 'Hover Background Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $button_name ); ?>_hover_background" name="<?php echo esc_attr( $button_name ); ?>[hover_background]" value="<?php echo esc_attr( $button_settings['hover_background'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_hover_text_color"><?php esc_html_e( 'Hover Text Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $button_name ); ?>_hover_text_color"><?php esc_html_e( 'Hover Text Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $button_name ); ?>_hover_text_color" name="<?php echo esc_attr( $button_name ); ?>[hover_text_color]" value="<?php echo esc_attr( $button_settings['hover_text_color'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Padding', WCQ_SLUG ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Padding', 'dm-cart-quotation' ); ?></th>
 			<td>
 				<input id="<?php echo esc_attr( $button_name ) . '_padding_top'; ?>" type="number" name="<?php echo esc_attr( $button_name ); ?>[padding][top]" value="<?php echo esc_attr( $button_settings['padding']['top'] ); ?>" placeholder="Top" />
 				<input id="<?php echo esc_attr( $button_name ) . '_padding_right'; ?>" type="number" name="<?php echo esc_attr( $button_name ); ?>[padding][right]" value="<?php echo esc_attr( $button_settings['padding']['right'] ); ?>" placeholder="Right" />
@@ -151,7 +151,7 @@ class Administration {
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Position', WCQ_SLUG ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Position', 'dm-cart-quotation' ); ?></th>
 			<td>
 				<select id="<?php echo esc_attr( $button_name ); ?>_position" name="<?php echo esc_attr( $button_name ); ?>_position">
 					<?php foreach ( self::default_position_button() as $key => $value ) : ?>
@@ -161,7 +161,7 @@ class Administration {
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Position Percentage', WCQ_SLUG ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Position Percentage', 'dm-cart-quotation' ); ?></th>
 			<td>
 				<input id="<?php echo esc_attr( $button_name . '_position_one_per' ); ?>"
 					type="number"
@@ -198,48 +198,48 @@ class Administration {
 		?>
 		<tr>
 			<th colspan="2">
-				<h2><?php esc_html_e( 'Notice Settings', WCQ_SLUG ); ?></h2>
+				<h2><?php esc_html_e( 'Notice Settings', 'dm-cart-quotation' ); ?></h2>
 			</th>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_border_radius"><?php esc_html_e( 'Border Radius', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_border_radius"><?php esc_html_e( 'Border Radius', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="number" id="<?php echo esc_attr( $notice_name ); ?>_border_radius" name="<?php echo esc_attr( $notice_name ); ?>[border_radius]" value="<?php echo esc_attr( $notice_settings['border_radius'] ); ?>" class="regular-text" /> px</td>
 		</tr>
 		<tr>
 			<th colspan="2">
-				<h3><?php esc_html_e( 'Success Notice', WCQ_SLUG ); ?></h3>
+				<h3><?php esc_html_e( 'Success Notice', 'dm-cart-quotation' ); ?></h3>
 			</th>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_success_text"><?php esc_html_e( 'Success Text', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_success_text"><?php esc_html_e( 'Success Text', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $notice_name ); ?>_success_text" name="<?php echo esc_attr( $notice_name ); ?>[success][text]" value="<?php echo esc_attr( $notice_settings['success']['text'] ); ?>" class="regular-text" /></td>
 		</tr>
 
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_success_background"><?php esc_html_e( 'Background Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_success_background"><?php esc_html_e( 'Background Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $notice_name ); ?>_success_background" name="<?php echo esc_attr( $notice_name ); ?>[success][background_color]" value="<?php echo esc_attr( $notice_settings['success']['background_color'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_success_text_color"><?php esc_html_e( 'Text Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_success_text_color"><?php esc_html_e( 'Text Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $notice_name ); ?>_success_text_color" name="<?php echo esc_attr( $notice_name ); ?>[success][text_color]" value="<?php echo esc_attr( $notice_settings['success']['text_color'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 
 
 		<tr>
 			<th colspan="2">
-				<h3><?php esc_html_e( 'Error Notice', WCQ_SLUG ); ?></h3>
+				<h3><?php esc_html_e( 'Error Notice', 'dm-cart-quotation' ); ?></h3>
 			</th>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_error_text"><?php esc_html_e( 'Error Text', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_error_text"><?php esc_html_e( 'Error Text', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $notice_name ); ?>_error_text" name="<?php echo esc_attr( $notice_name ); ?>[error][text]" value="<?php echo esc_attr( $notice_settings['error']['text'] ); ?>" class="regular-text" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_error_background"><?php esc_html_e( 'Background Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_error_background"><?php esc_html_e( 'Background Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $notice_name ); ?>_error_background" name="<?php echo esc_attr( $notice_name ); ?>[error][background_color]" value="<?php echo esc_attr( $notice_settings['error']['background_color'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_error_text_color"><?php esc_html_e( 'Text Color', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $notice_name ); ?>_error_text_color"><?php esc_html_e( 'Text Color', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $notice_name ); ?>_error_text_color" name="<?php echo esc_attr( $notice_name ); ?>[error][text_color]" value="<?php echo esc_attr( $notice_settings['error']['text_color'] ); ?>" class="regular-text wcq-color-picker" /></td>
 		</tr>
 
@@ -261,37 +261,37 @@ class Administration {
 		?>
 		<tr>
 			<th colspan="2">
-				<h2><?php esc_html_e( 'Messages Settings', WCQ_SLUG ); ?></h2>
+				<h2><?php esc_html_e( 'Messages Settings', 'dm-cart-quotation' ); ?></h2>
 			</th>
 		</tr>
 
 		<tr>
 			<th colspan="2">
-				<h3><?php esc_html_e( 'Success Messages', WCQ_SLUG ); ?></h3>
+				<h3><?php esc_html_e( 'Success Messages', 'dm-cart-quotation' ); ?></h3>
 			</th>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_success_cart_quote"><?php esc_html_e( 'Cart Quote Message', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_success_cart_quote"><?php esc_html_e( 'Cart Quote Message', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $message_name ); ?>_success_cart_quote" name="<?php echo esc_attr( $message_name ); ?>[success][cart_quote]" value="<?php echo esc_attr( $notice_settings['success']['cart_quote'] ); ?>" class="regular-text" /></td>
 		</tr>
 
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_success_cart_empty"><?php esc_html_e( 'Cart Empty Message', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_success_cart_empty"><?php esc_html_e( 'Cart Empty Message', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $message_name ); ?>_success_cart_empty" name="<?php echo esc_attr( $message_name ); ?>[success][cart_empty]" value="<?php echo esc_attr( $notice_settings['success']['cart_empty'] ); ?>" class="regular-text" /></td>
 		</tr>
 
 		<tr>
 			<th colspan="2">
-				<h3><?php esc_html_e( 'Error Messages', WCQ_SLUG ); ?></h3>
+				<h3><?php esc_html_e( 'Error Messages', 'dm-cart-quotation' ); ?></h3>
 			</th>
 		</tr>
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_error_cart_quote"><?php esc_html_e( 'Cart Quote Message', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_error_cart_quote"><?php esc_html_e( 'Cart Quote Message', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $message_name ); ?>_error_cart_quote" name="<?php echo esc_attr( $message_name ); ?>[error][cart_quote]" value="<?php echo esc_attr( $notice_settings['error']['cart_quote'] ); ?>" class="regular-text" /></td>
 		</tr>
 
 		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_error_cart_empty"><?php esc_html_e( 'Cart Empty Message', WCQ_SLUG ); ?></label></th>
+			<th scope="row"><label for="<?php echo esc_attr( $message_name ); ?>_error_cart_empty"><?php esc_html_e( 'Cart Empty Message', 'dm-cart-quotation' ); ?></label></th>
 			<td><input type="text" id="<?php echo esc_attr( $message_name ); ?>_error_cart_empty" name="<?php echo esc_attr( $message_name ); ?>[error][cart_empty]" value="<?php echo esc_attr( $notice_settings['error']['cart_empty'] ); ?>" class="regular-text" /></td>
 		</tr>
 
@@ -315,13 +315,13 @@ class Administration {
 	public static function save_wcq_settings() {
 		// Verify nonce
 		if ( ! isset( $_POST['wcq_save_settings_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wcq_save_settings_nonce'] ) ), 'wcq_save_settings_nonce_action' ) ) {
-			wp_send_json_error( __( 'Nonce verification failed', WCQ_SLUG ) );
+			wp_send_json_error( __( 'Nonce verification failed', 'dm-cart-quotation' ) );
 			return;
 		}
 
 		// Check user capabilities
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( __( 'You are not authorized to perform this action', WCQ_SLUG ) );
+			wp_send_json_error( __( 'You are not authorized to perform this action', 'dm-cart-quotation' ) );
 			return;
 		}
 
@@ -335,7 +335,7 @@ class Administration {
 
 		update_option( 'wcq_settings', $settings );
 
-		wp_send_json_success( __( 'Settings saved successfully', WCQ_SLUG ) );
+		wp_send_json_success( __( 'Settings saved successfully', 'dm-cart-quotation' ) );
 	}
 
 	public static function save_button_quote( $form_data ) {
@@ -452,7 +452,7 @@ class Administration {
 				'position'         => 'top_right',
 				'position_one_per' => 10,
 				'position_two_per' => 5,
-				'text'             => __( 'Send Quote', WCQ_SLUG ),
+				'text'             => __( 'Send Quote', 'dm-cart-quotation' ),
 			],
 			'button_empty_cart' => [
 				'padding'          => [
@@ -468,29 +468,29 @@ class Administration {
 				'position'         => 'bottom_right',
 				'position_one_per' => 10,
 				'position_two_per' => 5,
-				'text'             => __( 'Empty Cart', WCQ_SLUG ),
+				'text'             => __( 'Empty Cart', 'dm-cart-quotation' ),
 			],
 			'notices'           => [
 				'success'       => [
 					'background_color' => '#008000',
 					'text_color'       => '#fff',
-					'text'             => __( 'Quote generated & link copied to clipboard.', WCQ_SLUG ),
+					'text'             => __( 'Quote generated & link copied to clipboard.', 'dm-cart-quotation' ),
 				],
 				'error'         => [
 					'background_color' => '#d20a2e',
 					'text_color'       => '#fff',
-					'text'             => __( 'Something went wrong. Please try again.', WCQ_SLUG ),
+					'text'             => __( 'Something went wrong. Please try again.', 'dm-cart-quotation' ),
 				],
 				'border_radius' => 5,
 			],
 			'messages'          => [
 				'success' => [
-					'cart_quote' => __( 'Quote generated & link copied to clipboard.', WCQ_SLUG ),
-					'cart_empty' => __( 'Cart items removed. You are being redirected.', WCQ_SLUG ),
+					'cart_quote' => __( 'Quote generated & link copied to clipboard.', 'dm-cart-quotation' ),
+					'cart_empty' => __( 'Cart items removed. You are being redirected.', 'dm-cart-quotation' ),
 				],
 				'error'   => [
-					'cart_quote' => __( 'Something went wrong. Please try again.', WCQ_SLUG ),
-					'cart_empty' => __( 'Something went wrong. Please try again.', WCQ_SLUG ),
+					'cart_quote' => __( 'Something went wrong. Please try again.', 'dm-cart-quotation' ),
+					'cart_empty' => __( 'Something went wrong. Please try again.', 'dm-cart-quotation' ),
 
 				],
 			],
