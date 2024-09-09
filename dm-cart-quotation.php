@@ -13,7 +13,6 @@
  * Description: A unique WooCommerce plugin that enables you to send a link of items in the cart so the customer only needs to make a payment for the order.
  * Author: Digi Maple
  * Version: 0.0.1
- * Author URI: https://github.com/digimapleinc/cart-quotation-for-woocommerce/
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: dm-cart-quotation
