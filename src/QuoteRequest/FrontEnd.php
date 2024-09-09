@@ -239,6 +239,7 @@ class FrontEnd {
 	 * @return void
 	 */
 	public static function process_quotation() {
+		// phpcs:ignore WordPress.Security.NonceVerification.MISSING
 		if ( isset( $_REQUEST['quotation'] ) && sanitize_text_field( wp_unslash( $_REQUEST['quotation'] ) ) ) {
 			if ( isset( WC()->session ) && ! WC()->session->has_session() ) {
 				WC()->session->set_customer_session_cookie( true );
@@ -256,6 +257,7 @@ class FrontEnd {
 	 * @return void
 	 */
 	public static function add_items_to_cart() {
+		// phpcs:ignore WordPress.Security.NonceVerification.MISSING
 		if ( isset( $_REQUEST['quotation'] ) ) {
 			$token = sanitize_text_field( wp_unslash( $_REQUEST['quotation'] ) );
 
@@ -295,9 +297,15 @@ class FrontEnd {
 
 		$quotation_token = self::save_quotation();
 		$messages        = Utilities::wcq_get_setting( 'messages' );
+
+		$quotation_url = add_query_arg(array(
+			'quotation' => $quotation_token,
+			
+		), site_url('/cart/'));
+		
 		try {
 			$result = [
-				'link'    => site_url( '/cart/?quotation=' . $quotation_token ),
+				'link'    => $quotation_url,
 				'message' => sprintf( '%s', $messages['success']['cart_quote'] ),
 				'status'  => 'success',
 			];

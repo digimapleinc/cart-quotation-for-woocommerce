@@ -43,6 +43,7 @@ class Session {
 
 		$data = $wpdb->query(
 			$wpdb->prepare(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				"INSERT INTO $_table (`session_key`, `session_value`, `session_expiry`) VALUES (%s, %s, %d)
                 ON DUPLICATE KEY UPDATE `session_value` = VALUES(`session_value`), `session_expiry` = VALUES(`session_expiry`)",
 				$_customer_id,
