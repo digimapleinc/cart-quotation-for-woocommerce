@@ -42,9 +42,10 @@ class Assets
 	 */
 	public static function add_settings_assets()
 	{
-		$cart_url = wc_get_cart_url();
-		$current_url = home_url(add_query_arg(null, null));
-		if ($cart_url == $current_url) {
+		 
+		
+		if (is_page( wc_get_page_id( 'cart' ) )) {
+			
 			// Enqueue the stylesheet
 			wp_enqueue_style(
 				'wcq-style', // Handle
@@ -87,9 +88,7 @@ class Assets
 	 */
 	public static function wcq_enqueue_admin_style()
 	{
-		if(!isset($_GET['page']) || $_GET['page'] !== 'wcq-settings') {
-			return;
-		}
+	 
 		// Enqueue admin stylesheet
 		wp_register_style('wcq-admin-common-css', WCQ_URL . 'assets/css/common.css', false, '1.0.0');
 		wp_register_style('wcq-admin-css', WCQ_URL . 'assets/css/admin-style.css', false, '1.0.0');

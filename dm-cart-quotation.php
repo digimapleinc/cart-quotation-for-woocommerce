@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cart Quotation for WooCommerce
  *
@@ -21,16 +22,16 @@
  * Requires at least: 5.7
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
 // Define plugin constants
-define( 'WCQ_FILE', __FILE__ );          // Full path to the main plugin file
-define( 'WCQ_DIR', __DIR__ );            // Directory path of the plugin
-define( 'WCQ_URL', plugin_dir_url( __FILE__ ) ); // URL to the plugin directory
-define( 'WCQ_PATH', plugin_basename( WCQ_FILE ) ); // Path to the plugin relative to the plugins directory
-define( 'WCQ_SLUG', dirname( plugin_basename( WCQ_FILE ) ) ); // Plugin slug for use in URLs and other contexts
+define('WCQ_FILE', __FILE__);          // Full path to the main plugin file
+define('WCQ_DIR', __DIR__);            // Directory path of the plugin
+define('WCQ_URL', plugin_dir_url(__FILE__)); // URL to the plugin directory
+define('WCQ_PATH', plugin_basename(WCQ_FILE)); // Path to the plugin relative to the plugins directory
+define('WCQ_SLUG', dirname(plugin_basename(WCQ_FILE))); // Plugin slug for use in URLs and other contexts
 
 // Include the Composer autoload file to load dependencies
 require_once __DIR__ . '/vendor/autoload.php';
@@ -48,11 +49,12 @@ use WooQuoteRequest\Settings\Utilities;
  *
  * @return void
  */
-function handle_activation() {
+function handle_activation()
+{
 	Utilities::handle_activation(); // Call the activation handler in the Utilities class
 }
 
-register_activation_hook( WCQ_FILE, 'handle_activation' ); // Register the activation hook
+register_activation_hook(WCQ_FILE, 'handle_activation'); // Register the activation hook
 
 /**
  * Deactivation hook callback.
@@ -60,21 +62,28 @@ register_activation_hook( WCQ_FILE, 'handle_activation' ); // Register the activ
  *
  * @return void
  */
-function handle_deactivation() {
+function handle_deactivation()
+{
 	Utilities::handle_deactivation(); // Call the deactivation handler in the Utilities class
 }
 
-register_deactivation_hook( WCQ_FILE, 'handle_deactivation' ); // Register the deactivation hook
+register_deactivation_hook(WCQ_FILE, 'handle_deactivation'); // Register the deactivation hook
 
 /**
  * Initializes the plugin by setting up necessary actions and filters.
  *
  * @return void
  */
-function init_woocommerce_quote_request() {
+function init_woocommerce_quote_request()
+{
 	$main = new Initialize(); // Create an instance of the Initialize class
 	$main->init();           // Call the init method to perform initialization
 }
 
 // Hook the initialization function to the 'plugins_loaded' action
-add_action( 'plugins_loaded', 'init_woocommerce_quote_request' );
+add_action('plugins_loaded', 'init_woocommerce_quote_request');
+
+
+
+
+

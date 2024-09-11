@@ -35,16 +35,20 @@ class FrontEnd {
 		ob_start();
 		add_action( 'wp_head', [ self::class, 'process_quotation' ] );
 
-		add_action( 'woocommerce_before_cart', [ self::class, 'fmt_quotation_button' ] );
+		add_action( 'woocommerce_before_cart', [ self::class, 'dm_quotation_button' ] );
 
-		add_filter( 'render_block', [ self::class, 'bbloomer_woocommerce_cart_block_do_actions' ], 9999, 2 );
+		add_filter( 'render_block', [ self::class, 'dm_woocommerce_cart_block_do_actions' ], 9999, 2 );
 
 		add_action( 'wp_ajax_nopriv_create_quotation_link', [ self::class, 'create_quotation_link' ] );
 		add_action( 'wp_ajax_create_quotation_link', [ self::class, 'create_quotation_link' ] );
 
 		add_action( 'wp_ajax_nopriv_empty_cart_quotation', [ self::class, 'empty_cart_quotation' ] );
 		add_action( 'wp_ajax_empty_cart_quotation', [ self::class, 'empty_cart_quotation' ] );
-		add_action( 'woocommerce_checkout_create_order', [ self::class, 'dm_add_quotation_token_checkout' ], 10, 2 );
+	
+		add_action('woocommerce_checkout_create_order', [ self::class, 'dm_add_quotation_token_checkout'], 10, 2);
+
+		add_action('woocommerce_store_api_checkout_update_order_meta', [ self::class,'dm_add_quotation_token_checkout_rest'], 10, 1);
+	
 	}
 
 	/**
@@ -69,22 +73,40 @@ class FrontEnd {
 	 * @param array                                  $data The data associated with the order.
 	 * @return void
 	 */
-	public static function dm_add_quotation_token_checkout( $order, $data ) {
-		$quotation_token = WC()->session->get( 'quotation_token' );
-
-		if ( $quotation_token ) {
-			$order->update_meta_data( 'quotation_token', $quotation_token );
+	public static function dm_add_quotation_token_checkout($order, $data)
+	{
+		$quotation_token = WC()->session->get('quotation_token');
+		
+		if ($quotation_token) {
+			$order->update_meta_data('quotation_token', $quotation_token);
 		}
 	}
 
-	public static function bbloomer_woocommerce_cart_block_do_actions( $block_content, $block ) {
+	/**
+	 * Adds the quotation token to the order during checkout via the REST API.
+	 *
+	 * @param \WooQuoteRequest\QuoteRequest\WC_Order $order The order object.
+	 * @param array                                  $data The data associated with the order.
+	 * @return void
+	 */
+	public static function dm_add_quotation_token_checkout_rest($order)
+	{
+		$quotation_token = WC()->session->get('quotation_token');
+		if ($quotation_token) {
+			$order->update_meta_data('quotation_token', $quotation_token);
+		}
+	}
+
+
+
+	public static function dm_woocommerce_cart_block_do_actions( $block_content, $block ) {
 		$blocks = [
 			'woocommerce/cart',
 		];
 		if ( in_array( $block['blockName'], $blocks ) ) {
 			ob_start();
 
-			self::fmt_quotation_button();
+			self::dm_quotation_button();
 
 			do_action( 'dm_before_' . $block['blockName'] );
 			echo wp_kses_post( $block_content );
@@ -102,7 +124,7 @@ class FrontEnd {
 	 *
 	 * @return void
 	 */
-	public static function fmt_quotation_button() {
+	public static function dm_quotation_button() {
 
 		if ( is_user_logged_in() && current_user_can( 'administrator' ) ) {
 			$settings = Utilities::wcq_get_settings();
@@ -305,8 +327,7 @@ class FrontEnd {
 
 				if ( $cart ) {
 					// Set the quotation token in the session and save in the database
-					wc()->session->set( 'quotation_token', $token );
-
+					wc()->session->set('quotation_token', $token );
 					foreach ( $cart as $item ) {
 						$product_id = $item['product_id'];
 						$quantity   = $item['quantity'];
