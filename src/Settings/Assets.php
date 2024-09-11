@@ -13,7 +13,8 @@ namespace WooQuoteRequest\Settings;
  *
  * @package WooQuoteRequest\Settings
  */
-class Assets {
+class Assets
+{
 
 
 	/**
@@ -24,9 +25,10 @@ class Assets {
 	 *
 	 * @return void
 	 */
-	public static function initialize() {
-		add_action( 'wp_enqueue_scripts', [ self::class, 'add_settings_assets' ] );
-		add_action( 'admin_enqueue_scripts', [ self::class, 'wcq_enqueue_admin_style' ] );
+	public static function initialize()
+	{
+		add_action('wp_enqueue_scripts', [self::class, 'add_settings_assets']);
+		add_action('admin_enqueue_scripts', [self::class, 'wcq_enqueue_admin_style']);
 	}
 
 	/**
@@ -38,35 +40,40 @@ class Assets {
 	 *
 	 * @return void
 	 */
-	public static function add_settings_assets() {
-		// Enqueue the stylesheet
-		wp_enqueue_style(
-			'wcq-style', // Handle
-			WCQ_URL . 'assets/css/common.css', // Source
-			[], // Dependencies
-			'0.0.1' // Version
-		);
+	public static function add_settings_assets()
+	{
+		$cart_url = wc_get_cart_url();
+		$current_url = home_url(add_query_arg(null, null));
+		if ($cart_url == $current_url) {
+			// Enqueue the stylesheet
+			wp_enqueue_style(
+				'wcq-style', // Handle
+				WCQ_URL . 'assets/css/common.css', // Source
+				[], // Dependencies
+				'0.0.1' // Version
+			);
 
-		// Enqueue the JavaScript file
-		wp_enqueue_script(
-			'wcq-script-common', // Handle
-			WCQ_URL . 'assets/js/wcq-common.js', // Source
-			[ 'jquery' ], // Dependencies
-			'0.0.1', // Version
-			true // Load in footer
-		);
-		wp_enqueue_script(
-			'wcq-script', // Handle
-			WCQ_URL . 'assets/js/wcq-js.js', // Source
-			[ 'jquery', 'wcq-script-common' ], // Dependencies
-			'0.0.1', // Version
-			false // Load in header
-		);
-		wp_localize_script(
-			'wcq-script',
-			'ajax_object',
-			[ 'ajax_url' => admin_url( 'admin-ajax.php' ) ]
-		);
+			// Enqueue the JavaScript file
+			wp_enqueue_script(
+				'wcq-script-common', // Handle
+				WCQ_URL . 'assets/js/wcq-common.js', // Source
+				['jquery'], // Dependencies
+				'0.0.1', // Version
+				true // Load in footer
+			);
+			wp_enqueue_script(
+				'wcq-script', // Handle
+				WCQ_URL . 'assets/js/wcq-js.js', // Source
+				['jquery', 'wcq-script-common'], // Dependencies
+				'0.0.1', // Version
+				false // Load in header
+			);
+			wp_localize_script(
+				'wcq-script',
+				'ajax_object',
+				['ajax_url' => admin_url('admin-ajax.php')]
+			);
+		}
 	}
 
 	/**
@@ -78,29 +85,33 @@ class Assets {
 	 *
 	 * @return void
 	 */
-	public static function wcq_enqueue_admin_style() {
+	public static function wcq_enqueue_admin_style()
+	{
+		if(!isset($_GET['page']) || $_GET['page'] !== 'wcq-settings') {
+			return;
+		}
 		// Enqueue admin stylesheet
-		wp_register_style( 'wcq-admin-common-css', WCQ_URL . 'assets/css/common.css', false, '1.0.0' );
-		wp_register_style( 'wcq-admin-css', WCQ_URL . 'assets/css/admin-style.css', false, '1.0.0' );
-		wp_enqueue_style( 'wcq-admin-common-css' );
-		wp_enqueue_style( 'wcq-admin-css' );
+		wp_register_style('wcq-admin-common-css', WCQ_URL . 'assets/css/common.css', false, '1.0.0');
+		wp_register_style('wcq-admin-css', WCQ_URL . 'assets/css/admin-style.css', false, '1.0.0');
+		wp_enqueue_style('wcq-admin-common-css');
+		wp_enqueue_style('wcq-admin-css');
 
 		// Enqueue WordPress color picker styles and scripts
-		wp_enqueue_script( 'wp-color-picker' );
-		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script('wp-color-picker');
+		wp_enqueue_style('wp-color-picker');
 
 		// Enqueue custom admin script
 		wp_enqueue_script(
 			'wcq-admin-script-common', // Handle
 			WCQ_URL . 'assets/js/wcq-common.js', // Source
-			[ 'jquery' ], // Dependencies
+			['jquery'], // Dependencies
 			'0.0.1', // Version
 			true // Load in footer
 		);
 		wp_enqueue_script(
 			'wcq-admin-script', // Handle
 			WCQ_URL . 'assets/js/wcq-admin-script.js', // Source
-			[ 'jquery', 'wcq-admin-script-common' ], // Dependencies
+			['jquery', 'wcq-admin-script-common'], // Dependencies
 			'0.0.1', // Version
 			true // Load in footer
 		);
@@ -110,8 +121,8 @@ class Assets {
 			'wcq-admin-script',
 			'wcqForm',
 			[
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'custom_form_nonce' ),
+				'ajax_url' => admin_url('admin-ajax.php'),
+				'nonce'    => wp_create_nonce('custom_form_nonce'),
 			]
 		);
 	}
