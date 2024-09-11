@@ -18,6 +18,7 @@ class FrontEnd {
 
 
 
+	private static $_url_var = 'quotation';
 	/**
 	 * Initializes the shortcode and hooks for quotation functionality.
 	 *
@@ -27,6 +28,8 @@ class FrontEnd {
 	 * @return void
 	 */
 	public static function initialize() {
+
+		add_filter( 'query_vars', [ self::class, 'add_query_vars_filter' ] );
 
 		// Buffer the output
 		ob_start();
@@ -41,6 +44,37 @@ class FrontEnd {
 
 		add_action( 'wp_ajax_nopriv_empty_cart_quotation', [ self::class, 'empty_cart_quotation' ] );
 		add_action( 'wp_ajax_empty_cart_quotation', [ self::class, 'empty_cart_quotation' ] );
+		add_action( 'woocommerce_checkout_create_order', [ self::class, 'dm_add_quotation_token_checkout' ], 10, 2 );
+	}
+
+	/**
+	 * Adds a custom query variable to the list of recognized query variables.
+	 *
+	 * This method appends a custom query variable, defined by the class property
+	 * `$_url_var`, to the array of query variables. This allows WordPress to
+	 * recognize and handle the custom query variable in URLs.
+	 *
+	 * @param array $vars An array of current query variables.
+	 * @return array The modified array of query variables including the custom query variable.
+	 */
+	public static function add_query_vars_filter( $vars ) {
+		$vars[] = self::$_url_var;
+		return $vars;
+	}
+
+	/**
+	 * Adds the quotation token to the order during checkout.
+	 *
+	 * @param \WooQuoteRequest\QuoteRequest\WC_Order $order The order object.
+	 * @param array                                  $data The data associated with the order.
+	 * @return void
+	 */
+	public static function fmt_add_quotation_token_checkout( $order, $data ) {
+		$quotation_token = WC()->session->get( 'quotation_token' );
+
+		if ( $quotation_token ) {
+			$order->update_meta_data( 'quotation_token', $quotation_token );
+		}
 	}
 
 	public static function bbloomer_woocommerce_cart_block_do_actions( $block_content, $block ) {
@@ -239,15 +273,20 @@ class FrontEnd {
 	 * @return void
 	 */
 	public static function process_quotation() {
-		// phpcs:ignore WordPress.Security.NonceVerification.MISSING
-		if ( isset( $_REQUEST['quotation'] ) && sanitize_text_field( wp_unslash( $_REQUEST['quotation'] ) ) ) {
-			if ( isset( WC()->session ) && ! WC()->session->has_session() ) {
-				WC()->session->set_customer_session_cookie( true );
+		// Test if the query exists at the URL
+		if ( get_query_var( self::$_url_var ) ) {
+
+			// If so echo the value
+			$token = get_query_var( self::$_url_var );
+			if ( isset( $token ) && sanitize_text_field( wp_unslash( $token ) ) ) {
+				if ( isset( WC()->session ) && ! WC()->session->has_session() ) {
+					WC()->session->set_customer_session_cookie( true );
+				}
+
+				self::add_items_to_cart();
+
+				wp_safe_redirect( site_url( '/cart' ) );
 			}
-
-			self::add_items_to_cart();
-
-			wp_safe_redirect( site_url( '/cart' ) );
 		}
 	}
 
@@ -257,18 +296,23 @@ class FrontEnd {
 	 * @return void
 	 */
 	public static function add_items_to_cart() {
-		// phpcs:ignore WordPress.Security.NonceVerification.MISSING
-		if ( isset( $_REQUEST['quotation'] ) ) {
-			$token = sanitize_text_field( wp_unslash( $_REQUEST['quotation'] ) );
+		if ( get_query_var( self::$_url_var ) ) {
+			$token = get_query_var( self::$_url_var );
+			if ( isset( $token ) ) {
+				$token = sanitize_text_field( wp_unslash( $token ) );
 
-			$cart = Session::wcq_get_session( $token );
+				$cart = Session::wcq_get_session( $token );
 
-			if ( $cart ) {
-				foreach ( $cart as $item ) {
-					$product_id = $item['product_id'];
-					$quantity   = $item['quantity'];
-					unset( $item['data'] );
-					WC()->cart->add_to_cart( $product_id, $quantity, 0, [], $item );
+				if ( $cart ) {
+					// Set the quotation token in the session and save in the database
+					wc()->session->set( 'quotation_token', $token );
+
+					foreach ( $cart as $item ) {
+						$product_id = $item['product_id'];
+						$quantity   = $item['quantity'];
+						unset( $item['data'] );
+						WC()->cart->add_to_cart( $product_id, $quantity, 0, [], $item );
+					}
 				}
 			}
 		}
@@ -298,11 +342,14 @@ class FrontEnd {
 		$quotation_token = self::save_quotation();
 		$messages        = Utilities::wcq_get_setting( 'messages' );
 
-		$quotation_url = add_query_arg(array(
-			'quotation' => $quotation_token,
-			
-		), site_url('/cart/'));
-		
+		$quotation_url = add_query_arg(
+			[
+				'quotation' => $quotation_token,
+
+			],
+			site_url( '/cart/' )
+		);
+
 		try {
 			$result = [
 				'link'    => $quotation_url,
