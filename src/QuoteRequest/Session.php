@@ -40,19 +40,20 @@ class Session {
 		$_table = $GLOBALS['wpdb']->prefix . 'woocommerce_sessions';
 
 		$_session_expiration = time() + intval( apply_filters( 'wc_session_expiration', 60 * 60 * 360 ) ); // 15 days
-
-		$data = $wpdb->query(
-			$wpdb->prepare(
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				"INSERT INTO $_table (`session_key`, `session_value`, `session_expiry`) VALUES (%s, %s, %d)
-                ON DUPLICATE KEY UPDATE `session_value` = VALUES(`session_value`), `session_expiry` = VALUES(`session_expiry`)",
-				$_customer_id,
-				maybe_serialize( $cart_data ),
-				$_session_expiration
-			)
+		global $wpdb;
+		$table = $wpdb->prefix.'woocommerce_sessions';
+		$data = array(
+			'session_key' => $_customer_id, 
+			'session_value' => maybe_serialize( $cart_data ),
+			'session_expiry' => $_session_expiration
 		);
+		$format = array('%s','%s', '%s'); 
+		// @codingStandardsIgnoreStart
+		$wpdb->insert($table,$data,$format);
+		// @codingStandardsIgnoreEnd
+		$insert_id = $wpdb->insert_id;
 
-		if ( $data ) {
+		if ( $insert_id ) {
 			return $_customer_id;
 		} else {
 			return false;
@@ -89,12 +90,14 @@ class Session {
 		global $wpdb;
 
 		$_table = $GLOBALS['wpdb']->prefix . 'woocommerce_sessions';
-
+		// @codingStandardsIgnoreStart
 		$wpdb->delete(
 			$_table,
 			[
 				'session_key' => $customer_id,
 			]
-		);
+		); 
+		// @codingStandardsIgnoreEnd
+
 	}
 }
