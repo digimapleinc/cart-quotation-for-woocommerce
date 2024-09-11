@@ -377,9 +377,6 @@ class FrontEnd {
 	 * @return string|false The quotation token if successful, false otherwise.
 	 */
 	public static function save_quotation() {
-		global $wpdb;
-
-		$_table = $GLOBALS['wpdb']->prefix . 'woocommerce_sessions';
 
 		$_customer_id = Session::wcq_generate_customer_id();
 		$_data        = WC()->cart->get_cart();
