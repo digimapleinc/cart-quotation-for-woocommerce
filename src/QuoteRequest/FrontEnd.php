@@ -69,7 +69,7 @@ class FrontEnd {
 	 * @param array                                  $data The data associated with the order.
 	 * @return void
 	 */
-	public static function fmt_add_quotation_token_checkout( $order, $data ) {
+	public static function dm_add_quotation_token_checkout( $order, $data ) {
 		$quotation_token = WC()->session->get( 'quotation_token' );
 
 		if ( $quotation_token ) {
